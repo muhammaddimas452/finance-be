@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['http://localhost:5173'],
+    'allowed_origins' => [
+        'https://muhammaddimas452.github.io/finance-fe/',
+        'http://localhost:5173'
+    ],
 
     'allowed_origins_patterns' => [],
 

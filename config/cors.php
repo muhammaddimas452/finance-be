@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://muhammaddimas452.github.io/finance-fe/',
+        'https://muhammaddimas452.github.io',
         'http://localhost:5173'
     ],
 

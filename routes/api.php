@@ -13,6 +13,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 // --- RUTE TERPROTEKSI (Wajib bawa Token Sanctum) ---
 Route::middleware('auth:sanctum')->group(function () {
+    // Tambahkan di dalam Route::middleware('auth:sanctum')->group(function () { ... });
+    Route::patch('/wallets/{id}/set-primary', [App\Http\Controllers\WalletController::class, 'setPrimary']);
 
     Route::post('/profile', [AuthController::class, 'updateProfile']);
     // Logout (menghapus token)

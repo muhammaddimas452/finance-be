@@ -16,6 +16,30 @@ class WalletController extends Controller
         return response()->json($wallets);
     }
 
+    public function setPrimary(Request $request, $id)
+    {
+        $user = $request->user();
+
+        // 1. Cari dompet berdasarkan ID dan pastikan itu milik user yang sedang login
+        $wallet = Wallet::where('id', $id)->where('user_id', $user->id)->firstOrFail();
+
+        // 2. Ubah SEMUA dompet milik user ini menjadi is_primary = false
+        Wallet::where('user_id', $user->id)->update(['is_primary' => false]);
+
+        // 3. Jadikan dompet yang dipilih menjadi true
+        $wallet->is_primary = true;
+        $wallet->save();
+
+        // 4. Ambil ulang semua data dompet terbaru untuk dikirim ke frontend
+        $wallets = Wallet::where('user_id', $user->id)->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Dompet utama berhasil diubah.',
+            'wallets' => $wallets
+        ]);
+    }
+
     // 2. BUAT DOMPET BARU
     public function store(Request $request)
     {

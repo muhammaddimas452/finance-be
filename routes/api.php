@@ -16,6 +16,9 @@ Route::middleware('auth:sanctum')->group(function () {
     // Tambahkan di dalam Route::middleware('auth:sanctum')->group(function () { ... });
     Route::patch('/wallets/{id}/set-primary', [App\Http\Controllers\WalletController::class, 'setPrimary']);
 
+    // Tambahkan di dalam Route::middleware('auth:sanctum')->group(function () { ...
+    Route::apiResource('bills', App\Http\Controllers\BillController::class);
+
     Route::post('/profile', [AuthController::class, 'updateProfile']);
     // Logout (menghapus token)
     Route::post('/logout', [AuthController::class, 'logout']);

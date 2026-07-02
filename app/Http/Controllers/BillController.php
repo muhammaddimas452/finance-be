@@ -11,6 +11,18 @@ class BillController extends Controller
     public function index(Request $request)
     {
         $bills = Bill::where('user_id', $request->user()->id)->get();
+
+        $currentMonthYear = now()->format('Y-m'); // Contoh hasil: "2026-07"
+
+        foreach ($bills as $bill) {
+            // Cek apakah tagihan lunas, TAPI dibayarnya di bulan sebelumnya
+            if ($bill->is_paid && $bill->updated_at->format('Y-m') < $currentMonthYear) {
+                $bill->is_paid = false;
+                $bill->save(); // Otomatis mengupdate updated_at ke bulan sekarang
+            }
+        }
+
+        // Jangan lupa di-Push ke GitHub agar Railway memperbarui API-nya!
         return response()->json(['success' => true, 'data' => $bills]);
     }
 
